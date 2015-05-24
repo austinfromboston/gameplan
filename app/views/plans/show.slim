@@ -1,3 +1,23 @@
-ul
+table(class="ink-table alternating")
+  tr
+    th
+    - @weeks.each do |w|
+      th= w.strftime('%m/%d')
   - @projects.each do |project|
-    li= project.name
+    tr
+      th(class='align-left')= project.name
+      - @weeks.each do |w|
+        td
+          - project.capacity_plans.for_week(w).each do |cp|
+            ul
+              - cp.slots_for_week(w).each do |s|
+                li= s
+
+  tr
+    th(class='align-left')  Unassigned
+    - @weeks.each do |w|
+      td
+        ul
+          - Person.unassigned_for_week(w).each do |p|
+            li
+              abbr(title=p.name)= p.abbreviation
