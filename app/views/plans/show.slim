@@ -9,19 +9,19 @@ table(class="ink-table alternating")
       - @weeks.each do |w|
         td
           - project.capacity_plans.for_week(w).each do |cp|
-            ul(class="capacity-plan accept-#{w.strftime("%V%g")}" data-accept=w.strftime("%V%g") data-slots=cp.quantity)
-              - cp.assigned_for_week(w).each do |s|
-                li(class="assigned-slot" data-timeslot=w.strftime("%V%g"))
-                  = s
+            ul(class="capacity-plan accept-#{w.strftime("%V%g")}" data={accept:w.strftime("%V%g"), slots:cp.quantity, project: project.id})
+              - cp.assignments.includes(:person).for_week(w).each do |a|
+                li(class="assigned-slot" data={timeslot:w.strftime("%V%g"), person:a.person.to_param} title=a.person.name)
+                  = a.person.abbreviation
               .insert-here
               - cp.open_slots_for_week(w).times do
                 li(class="open-slot") open
 
-  tr
+  tr(class='unassigned-set')
     th(class='align-left')  Unassigned
     - @weeks.each do |w|
       td
-        ul
+        ul(data-accept=w.strftime("%V%g"))
           - Person.unassigned_for_week(w).each do |p|
-            li
-              abbr(title=p.name)= p.abbreviation
+            li(class="assigned-slot" data-timeslot=w.strftime("%V%g"))
+              = p.abbreviation

@@ -31,12 +31,26 @@ interact('.capacity-plan').dropzone({
     $(relatedTarget).hide();
     resetPosition(event.relatedTarget);
     if($(relatedTarget).data('timeslot') == $(event.target).data('accept')) {
-      $(relatedTarget).parent().append($('.open-slot', event.target).first());
-      $('.insert-here', event.target).before(relatedTarget);
+      swapSlots(relatedTarget, event.target)
+      var followingSlots = $('[data-person=' + $(relatedTarget).data('person')+ ']' );
+      followingSlots.each(function() {
+        console.log($(this).closest('.capacity-plan').data('timeslot'), $().data('accept'));
+        if($(this).data('timeslot')<$(relatedTarget).data('timeslot')) {
+          return;
+        }
+        var followTarget = $('[data-project=' + $(event.target).data('project')+ '][data-accept=' + $(this).data('timeslot') + ']');
+        swapSlots(this, followTarget);
+      });
+
     }
     $(relatedTarget).show();
   }
 });
+
+function swapSlots(inbound, target) {
+  $(inbound).parent().append($('.open-slot', target).first());
+  $('.insert-here', target).before(inbound);
+}
 
 function resetPosition(el) {
   el.style.webkitTransform = el.style.transform = '';
