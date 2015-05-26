@@ -13,4 +13,12 @@ class CapacityPlan < ActiveRecord::Base
     names = assigned.map {|a| a.person.abbreviation}
     names + (["open"] * (quantity - names.count))
   end
+
+  def assigned_for_week(week)
+    assignments.includes(:person).for_week(week).map {|a| a.person.abbreviation}
+  end
+
+  def open_slots_for_week(week)
+    quantity - assignments.for_week(week).count
+  end
 end

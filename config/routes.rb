@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
-  resource :plan
+  resource :plan do
+    member do
+      get :demo
+    end
+  end
   root to: "plans#show"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

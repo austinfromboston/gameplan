@@ -2,5 +2,4 @@
 //= require react_ujs
 
 React = require('react');
-
-DemoComponent = require('./components/DemoComponent');
+Container = require('./components/Container');
