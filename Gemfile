@@ -31,6 +31,7 @@ gem 'font-awesome-rails'
 gem 'thin'
 gem 'react-rails'
 gem 'browserify-rails', git: 'git@github.com:browserify-rails/browserify-rails.git'
+gem 'active_model_serializers'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -42,6 +43,7 @@ gem 'browserify-rails', git: 'git@github.com:browserify-rails/browserify-rails.g
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-interact'
+  gem 'rails-assets-moment'
 end
 
 group :development, :test do
@@ -54,5 +56,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'konacha'
 end
 

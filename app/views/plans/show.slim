@@ -1,3 +1,5 @@
+= react_component('QuarterlyPlan', projects: @projects.map {|p| ProjectSerializer.new(p)})
+
 table(class="ink-table alternating")
   tr
     th
@@ -17,11 +19,5 @@ table(class="ink-table alternating")
               - cp.open_slots_for_week(w).times do
                 li(class="open-slot") open
 
-  tr(class='unassigned-set')
-    th(class='align-left')  Unassigned
-    - @weeks.each do |w|
-      td
-        ul(data-accept=w.strftime("%V%g"))
-          - Person.unassigned_for_week(w).each do |p|
-            li(class="assigned-slot" data-timeslot=w.strftime("%V%g"))
-              = p.abbreviation
+
+

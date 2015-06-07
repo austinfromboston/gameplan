@@ -13,4 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require interact
+//= require moment
 //= require plan
+//= require react
+//= require components
