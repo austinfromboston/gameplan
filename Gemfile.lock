@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/activeadmin/activeadmin.git
-  revision: cef68b7be82699f9abdc46c98e4fa6a471cb1761
+  revision: 0b4b22871fd332c94daec3c5138c0cf9a5b95451
   specs:
     activeadmin (1.0.0.pre1)
       arbre (~> 1.0, >= 1.0.2)
@@ -17,11 +17,22 @@ GIT
       sass-rails
 
 GIT
-  remote: git@github.com:browserify-rails/browserify-rails.git
-  revision: 113e12105aea534026d71e89f6f53aab4fedfb18
+  remote: git://github.com/rails/sass-rails.git
+  revision: 8e68c5f24ed6487277e9df531ec57b375ad1bea2
   specs:
-    browserify-rails (0.9.1)
-      sprockets (~> 2.2)
+    sass-rails (5.0.3)
+      railties (>= 4.0.0, < 5.0)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (>= 1.1, < 3)
+
+GIT
+  remote: git@github.com:browserify-rails/browserify-rails.git
+  revision: 81bed3f8b0965511e72450ad52b6bad85a44630a
+  specs:
+    browserify-rails (1.0.1)
+      railties (>= 4.0.0, < 5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -67,8 +78,6 @@ GEM
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.0)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
     bourbon (4.2.3)
       sass (~> 3.4)
       thor
@@ -92,7 +101,6 @@ GEM
     columnize (0.9.0)
     connection_pool (2.2.0)
     daemons (1.2.2)
-    debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.7)
@@ -109,7 +117,6 @@ GEM
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
-    hike (1.2.3)
     i18n (0.7.0)
     inherited_resources (1.6.0)
       actionpack (>= 3.2, < 5)
@@ -118,16 +125,16 @@ GEM
       responders
     ink3-rails (0.1.3)
       rails
-    jbuilder (2.2.16)
+    jbuilder (2.3.0)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
-    jquery-rails (4.0.3)
+    jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
-    json (1.8.2)
+    json (1.8.3)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -144,13 +151,13 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.6.1)
-    multi_json (1.11.0)
+    minitest (5.7.0)
+    multi_json (1.11.1)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
-    rack (1.6.1)
+    rack (1.6.2)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.0)
@@ -196,65 +203,51 @@ GEM
     react-source (0.13.3)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
-    rspec-core (3.2.3)
-      rspec-support (~> 3.2.0)
-    rspec-expectations (3.2.1)
+    rspec-core (3.3.0)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.2.0)
-    rspec-mocks (3.2.1)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.2.0)
-    rspec-rails (3.2.1)
+      rspec-support (~> 3.3.0)
+    rspec-rails (3.3.1)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)
-      rspec-core (~> 3.2.0)
-      rspec-expectations (~> 3.2.0)
-      rspec-mocks (~> 3.2.0)
-      rspec-support (~> 3.2.0)
-    rspec-support (3.2.2)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
     sass (3.4.14)
-    sass-rails (5.0.3)
-      railties (>= 4.0.0, < 5.0)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (~> 1.1)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    slim (3.0.3)
+    slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
     spring (1.3.6)
-    sprockets (2.12.3)
-      hike (~> 1.2)
-      multi_json (~> 1.0)
+    sprockets (3.2.0)
       rack (~> 1.0)
-      tilt (~> 1.1, != 1.3.0)
     sprockets-rails (2.3.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.10)
-    temple (0.7.5)
+    temple (0.7.6)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
       rack (~> 1.0)
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (1.4.1)
+    tilt (2.0.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    web-console (2.1.2)
-      activemodel (>= 4.0)
-      binding_of_caller (>= 0.7.2)
-      railties (>= 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -278,11 +271,11 @@ DEPENDENCIES
   rails-assets-moment!
   react-rails
   rspec-rails
-  sass-rails
+  sass-rails!
   sdoc (~> 0.4.0)
   slim
   spring
   sqlite3
   thin
+  tilt (> 2.0)
   uglifier (>= 1.3.0)
-  web-console (~> 2.0)
