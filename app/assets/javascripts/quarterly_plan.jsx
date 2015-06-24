@@ -1,29 +1,27 @@
 var QuarterlyPlan = React.createClass({
-  sequenceStart: moment().startOf('isoWeek'),
-  sequenceSize: 12,
-
-  chartWeeks: function() {
-    if (this.currentWeeks) {
-      return this.currentWeeks;
-    } else {
-      return this.calculateChartWeeks();
+  getInitialState: function() {
+    var sequenceSize = 12;
+    var weeks = this.calculateChartWeeks(this.props.start, sequenceSize)
+    return {
+      chartWeeks: weeks
     }
   },
 
-  calculateChartWeeks: function() {
-    this.currentWeeks = Array(this.sequenceSize);
-    for (var j = 0; j < this.sequenceSize; j++) {
-      this.currentWeeks[j] = this.sequenceStart.clone().add(j, 'weeks');
+  calculateChartWeeks: function(requestedStart, size) {
+    var start = moment(requestedStart).startOf('isoWeek');
+    var currentWeeks = Array(size);
+    for (var j = 0; j < size; j++) {
+      currentWeeks[j] = start.clone().add(j, 'weeks');
     }
-    return this.currentWeeks;
+    return currentWeeks;
   },
 
   render: function() {
     return (
     <div className="quarterlyPlan">
     <h1>QuarterlyPlan</h1>
-    <WeekHeaders currentWeeks={this.chartWeeks()} />
-    <ProjectList projects={this.props.projects} weeks={this.chartWeeks()} />
+    <WeekHeaders currentWeeks={this.state.chartWeeks} />
+    <ProjectList projects={this.props.projects} weeks={this.state.chartWeeks} />
     </div>
     );
   }

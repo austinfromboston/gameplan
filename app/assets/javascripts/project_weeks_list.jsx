@@ -1,10 +1,11 @@
 var ProjectWeeksList = React.createClass({
   render: function() {
-    var weekNodes = this.props.weeks.map(function(week) {
-      return (
-        <ProjectWeek week={week} />
-      )
-    });
+    var weekNodes = [];
+    //  this.props.weeks.map(function(week) {
+    //  return (
+    //    <ProjectWeek week={week} />
+    //  )
+    //});
     return(
       <ul>
         {weekNodes}

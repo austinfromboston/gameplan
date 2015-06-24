@@ -2,7 +2,7 @@ var WeekHeaders = React.createClass({
   render: function() {
     var weekNodes = this.props.currentWeeks.map(function(weekStart) {
       return (
-        <WeekHeader week={weekStart} />
+        <WeekHeader week={weekStart} key={weekStart}/>
       )
     });
     return (
