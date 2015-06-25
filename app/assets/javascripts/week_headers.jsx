@@ -17,7 +17,7 @@ var WeekHeader = React.createClass({
     render: function() {
       return (
       <li className='week-header'>
-        {this.props.week.format('M/D') }
+        {this.props.week.format('MM/DD') }
       </li>
       )
     }

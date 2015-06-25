@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       get :demo
     end
   end
+  resources :projects, only: [] do
+    resources :project_weeks, only: :show
+  end
   root to: "plans#show"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

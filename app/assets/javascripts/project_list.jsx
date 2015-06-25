@@ -3,7 +3,7 @@ var ProjectList = React.createClass({
     var self = this;
     var projectNodes = this.props.projects.map(function(project) {
       return (
-        <Project name={project.name} weeks={self.weeks} key={project.name}/>
+        <Project name={project.name} weeks={self.props.weeks} project_id={project.id} key={project.id}/>
       )
     })
     return (
@@ -17,7 +17,7 @@ var Project = React.createClass({
     return (
       <div>
         <li>{this.props.name}</li>
-        <ProjectWeeksList weeks={this.props.weeks} />
+        <ProjectWeeksList weeks={this.props.weeks} project_id={this.props.project_id} />
       </div>
     )
   }
