@@ -17,11 +17,15 @@ var QuarterlyPlan = React.createClass({
   },
 
   render: function() {
+    var self = this;
+    var projects = this.props.projects.map(function(project) {
+      return (<Project name={project.name} weeks={self.state.chartWeeks} project_id={project.id} key={project.id}/>);
+    });
     return (
-    <div className="quarterlyPlan">
-    <h1>QuarterlyPlan</h1>
+    <div className="quarterlyPlan gp-table alternating">
+    <h1 className="plan-header">QuarterlyPlan</h1>
     <WeekHeaders currentWeeks={this.state.chartWeeks} />
-    <ProjectList projects={this.props.projects} weeks={this.state.chartWeeks} />
+    {projects}
     </div>
     );
   }

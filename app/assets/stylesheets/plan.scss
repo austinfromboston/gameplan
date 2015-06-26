@@ -6,3 +6,52 @@
 .schedule-drop.current-drop {
   background: rgba(255, 100, 100, 0.8);
 }
+
+.gp-table {
+  display: table;
+  border-collapse: collapse;
+
+  > ul {
+    border-bottom: 1px solid grey;
+  }
+  ul:nth-child(even) {
+    background-color: whitesmoke;
+  }
+}
+.week-headers {
+  display: table-header-group;
+
+  > li {
+    display: table-cell;
+  }
+}
+
+.plan-header {
+  display: table-caption;
+}
+.project-row {
+  display: table-row;
+
+  .project-name {
+    margin-right: 1em;
+  }
+  .project-row-header {
+    font-weight: bold;
+    display: table-cell;
+  }
+
+  > li {
+    display: table-cell;
+  }
+}
+
+.assignment-list {
+  margin-right: 40px;
+  padding: 0;
+
+
+  > li {
+    display: table-row;
+    text-align: left;
+  }
+}

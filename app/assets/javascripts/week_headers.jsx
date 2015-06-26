@@ -7,6 +7,7 @@ var WeekHeaders = React.createClass({
     });
     return (
       <ul className="week-headers">
+        <li></li>
         {weekNodes}
       </ul>
     )
