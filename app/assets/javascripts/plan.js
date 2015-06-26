@@ -27,25 +27,32 @@ interact('.capacity-plan').dropzone({
     $(event.target).removeClass('current-drop');
   },
   ondrop: function(event) {
-    var relatedTarget = event.relatedTarget;
-    $(relatedTarget).hide();
-    resetPosition(event.relatedTarget);
-    if($(relatedTarget).data('timeslot') == $(event.target).data('accept')) {
-      swapSlots(relatedTarget, event.target)
-      var followingSlots = $('[data-person=' + $(relatedTarget).data('person')+ ']' );
-      followingSlots.each(function() {
-        console.log($(this).closest('.capacity-plan').data('timeslot'), $().data('accept'));
-        if($(this).data('timeslot')<$(relatedTarget).data('timeslot')) {
-          return;
-        }
-        var followTarget = $('[data-project=' + $(event.target).data('project')+ '][data-accept=' + $(this).data('timeslot') + ']');
-        swapSlots(this, followTarget);
-      });
-
-    }
-    $(relatedTarget).show();
+    var drop = new React.SyntheticEvent({type: 'drop'}, event.target, event)
+    console.log(event.target);
+    $(event.target).trigger('drop');
   }
 });
+
+function classicDrop(event) {
+  var relatedTarget = event.relatedTarget;
+  $(relatedTarget).hide();
+  resetPosition(event.relatedTarget);
+  if($(relatedTarget).data('timeslot') == $(event.target).data('accept')) {
+    swapSlots(relatedTarget, event.target)
+    var followingSlots = $('[data-person=' + $(relatedTarget).data('person')+ ']' );
+    followingSlots.each(function() {
+      console.log($(this).closest('.capacity-plan').data('timeslot'), $().data('accept'));
+      if($(this).data('timeslot')<$(relatedTarget).data('timeslot')) {
+        return;
+      }
+      var followTarget = $('[data-project=' + $(event.target).data('project')+ '][data-accept=' + $(this).data('timeslot') + ']');
+      swapSlots(this, followTarget);
+    });
+
+  }
+  $(relatedTarget).show();
+
+}
 
 function swapSlots(inbound, target) {
   $(inbound).parent().append($('.open-slot', target).first());
@@ -56,7 +63,7 @@ function resetPosition(el) {
   el.style.webkitTransform = el.style.transform = '';
 }
 function dragMoveListener (event) {
-  var target = event.target
+  var target = event.target;
 
   // translate the element
   target.style.webkitTransform =
