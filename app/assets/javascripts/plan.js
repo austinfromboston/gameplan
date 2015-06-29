@@ -27,7 +27,7 @@ interact('.capacity-plan').dropzone({
     $(event.target).removeClass('current-drop');
   },
   ondrop: function(event) {
-    var drop = new React.SyntheticEvent({type: 'drop'}, event.target, event)
+    //var drop = new React.SyntheticEvent({type: 'drop'}, event.target, event)
     console.log(event.target);
     $(event.target).trigger('drop');
   }
