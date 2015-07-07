@@ -7,6 +7,19 @@ var ProjectWeek = React.createClass({
     this.setupDropzone(React.findDOMNode(this))
 
     this.fetchAssignments();
+    this.removeDropped();
+  },
+
+  removeDropped: function() {
+    var self = this;
+    $(React.findDOMNode(this)).on('dropped', function(ev, droppedData) {
+      self.setState(function(previousState, currentProps) {
+        var dup = previousState.data.filter(function(el, idx, array) {
+          return el.id != droppedData.id;
+        });
+        return {data: dup};
+      });
+    });
   },
 
   fetchAssignments: function(){
@@ -26,7 +39,7 @@ var ProjectWeek = React.createClass({
   setupDropzone: function(el) {
     var self = this;
 
-    interact(el).dropzone({
+    interact($('.assignment-list', el)[0]).dropzone({
       accept: '.assigned-slot',
       ondragenter: function(event) {
         $(event.target).addClass('current-drop');
@@ -35,22 +48,27 @@ var ProjectWeek = React.createClass({
         $(event.target).removeClass('current-drop');
       },
       ondrop: function(event) {
-        //var drop = new React.SyntheticEvent({type: 'drop'}, event.target, event)
-        console.log(event.target);
-        self.handleDrop();
+        self.handleDrop(event);
       }
     });
   },
 
-  handleDrop: function() {
-    console.log('dropped!');
+  handleDrop: function(ev) {
+    var droppedPerson = $(ev.relatedTarget).data('person');
+    this.setState(function(previousState, currentProps) {
+      var dup = previousState.data.slice(0);
+      dup.push(droppedPerson);
+      return {data: dup};
+    });
+    $(ev.relatedTarget).trigger('dropped', droppedPerson);
+
   },
 
   render: function() {
     var self=this;
     var assignments = this.state.data.map(function(assignment) {
       return (
-        <ProjectWeekAssignment key={assignment.id} week={self.props.week} name={assignment.person_name} abbrev={assignment.person_abbreviation} person_id={assignment.person_id}/>
+        <ProjectWeekAssignment key={assignment.id} week={self.props.week} person={JSON.stringify(assignment)} name={assignment.person_name} abbrev={assignment.person_abbreviation} person_id={assignment.person_id}/>
       );
     });
 
@@ -88,24 +106,31 @@ var ProjectWeekAssignment = React.createClass({
       }
     );
   },
+
   resetPosition: function(el) {
-    el.style.webkitTransform = el.style.transform = '';
+    this.dragPlaceholder.remove();
+    delete(this.dragPlaceholder);
   },
+
   dragMoveListener: function (event) {
-    var target = event.target;
-
-    // translate the element
-    target.style.webkitTransform =
-      target.style.transform =
-        'translate(0px, ' + (event.clientY - event.clientY0) + 'px)';
-
+    var self = this;
+    if(self.dragPlaceholder == undefined) {
+      var dragDiv = document.createElement('div');
+      dragDiv.style.position = "absolute";
+      dragDiv.textContent = $(event.target).text();
+      self.dragPlaceholder = document.body.appendChild(dragDiv);
+    }
+    self.dragPlaceholder.style.top = event.clientY + "px";
+    self.dragPlaceholder.style.left = event.clientX0 + "px";
   },
+
   render: function() {
     return (
       <li
+        className="assigned-slot"
         title={this.props.name}
         data-timeslot={this.props.week}
-        data-person-id={this.props.person_id}>
+        data-person={this.props.person}>
         {this.props.abbrev}</li>
     );
   }
