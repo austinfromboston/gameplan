@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :demo
     end
   end
+  resources :assignments, only: :create
   resources :projects, only: [] do
     resources :project_weeks, only: :show
   end

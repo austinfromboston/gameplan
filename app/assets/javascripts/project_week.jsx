@@ -61,7 +61,21 @@ var ProjectWeek = React.createClass({
       return {data: dup};
     });
     $(ev.relatedTarget).trigger('dropped', droppedPerson);
+    console.log(this.props.week);
+    this.notifyServer(droppedPerson);
+  },
 
+  notifyServer: function(droppedPerson) {
+    $.post('/assignments',
+      {person_id: droppedPerson.id, timeslot: this.props.week.toString(), project_id: this.props.project_id }
+
+    ).done(function(data) {
+        console.log('success');
+      }.bind(this)
+    ).fail(function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    );
   },
 
   render: function() {
@@ -71,10 +85,14 @@ var ProjectWeek = React.createClass({
         <ProjectWeekAssignment key={assignment.id} week={self.props.week} person={JSON.stringify(assignment)} name={assignment.person_name} abbrev={assignment.person_abbreviation} person_id={assignment.person_id}/>
       );
     });
+    var placeholderClass = '';
+    if(this.state.data.length == 0) {
+      placeholderClass = " empty-droplist";
+    }
 
     return (
       <li>
-        <ul onDrop={this.handleDrop} className={"assignment-list accept-" + this.props.week}>
+        <ul onDrop={this.handleDrop} className={"assignment-list accept-" + this.props.week + placeholderClass}>
           {assignments}
         </ul>
       </li>
