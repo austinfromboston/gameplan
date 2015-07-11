@@ -3,12 +3,21 @@ AssignmentCreator ||= Struct.new(:attrs)
 class AssignmentCreator
   def save
     Assignment.transaction do
-      make_assignment_continuous || prepend_to_next_assignment || create_new_assignment
+      make_assignment_continuous || append_to_prior_assignment || prepend_to_next_assignment || create_new_assignment
     end
   end
 
   def terminate_prior_assignment
-    prior_assignment.update_attributes end_date: new_assignment_start
+    prior_assignment.update_attributes end_date: new_assignment_start.yesterday
+    prior_assignment.destroy if prior_assignment.start_date > prior_assignment.end_date
+  end
+
+  def append_to_prior_assignment
+    return unless last_weeks_assignment && last_weeks_assignment.project == project
+    last_weeks_assignment.tap do |a|
+      a.update_attributes end_date: new_assignment_end
+      prior_assignment.destroy unless last_weeks_assignment == prior_assignment
+    end
   end
 
   def prepend_to_next_assignment

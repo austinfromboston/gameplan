@@ -26,7 +26,26 @@ describe AssignmentCreator do
     end
 
     it "ends the prior assignment" do
-      expect {subject}.to change { source_assignment.reload.end_date }.to(Date.new(2014,10,13))
+      expect {subject}.to change { source_assignment.reload.end_date }.to(Date.new(2014,10,12))
+    end
+
+    context "when last weeks assignment is to the target project" do
+      let!(:target_assignment) do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: target_project.to_param,
+          timeslot: "2014/10/08").save
+      end
+      before do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: source_project.to_param,
+          timeslot: start_time).save
+      end
+      it "extends last weeks assignment" do
+        expect {subject}.to change { person.assignments.count }.by(-1)
+        expect(target_assignment.end_date).to eq(nil)
+      end
     end
 
     context "when restoring an interruption in source project continuity" do
