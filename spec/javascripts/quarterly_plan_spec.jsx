@@ -8,6 +8,7 @@ describe("QuarterlyPlan", function() {
     this.qp = React.addons.TestUtils.renderIntoDocument(this.template);
 
   });
+
   describe("#getInitialState", function() {
     it("starts at the beginning of the current week", function() {
       this.qp.state.chartWeeks[0].isSame(moment().startOf('isoWeek')).should.equal(true);
@@ -16,6 +17,7 @@ describe("QuarterlyPlan", function() {
       this.qp.state.chartWeeks.length.should.equal(12)
     })
   });
+
   describe("#calculateChartWeeks", function() {
     it("accepts a passed start date", function() {
       this.template = <QuarterlyPlan projects={this.projectData} start="2013-10-01"/>;
@@ -43,7 +45,8 @@ describe("QuarterlyPlan", function() {
     });
 
     it("passes the project data", function() {
-      this.qpOutput.props.children[2].props.projects.should.equal(this.projectData)
+      this.qpOutput.props.children[2][0].props.name.should.equal('Aut')
+      this.qpOutput.props.children[2][0].props.project_id.should.equal(20)
     });
 
   });
