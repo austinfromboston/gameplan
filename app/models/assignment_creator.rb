@@ -9,7 +9,7 @@ class AssignmentCreator
 
   def terminate_prior_assignment
     prior_assignment.update_attributes end_date: new_assignment_start.yesterday
-    prior_assignment.destroy if prior_assignment.start_date > prior_assignment.end_date
+    prior_assignment.destroy if prior_assignment.start_date >= prior_assignment.end_date
   end
 
   def append_to_prior_assignment
@@ -28,6 +28,7 @@ class AssignmentCreator
   end
 
   def make_assignment_continuous
+    return true if prior_assignment.project == project
     if last_weeks_assignment && next_assignment && project.assignments.include?(last_weeks_assignment) && project.assignments.include?(next_assignment)
       last_weeks_assignment.tap do |a|
         prior_assignment.destroy unless last_weeks_assignment == prior_assignment

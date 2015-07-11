@@ -1,6 +1,6 @@
 class Person < ActiveRecord::Base
 
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
 
   scope :unassigned_for_week, ->(week) { where.not(id: Assignment.for_week(week).select(:person_id))}
   before_create :sample_abbreviation

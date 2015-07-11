@@ -29,6 +29,13 @@ describe AssignmentCreator do
       expect {subject}.to change { source_assignment.reload.end_date }.to(Date.new(2014,10,12))
     end
 
+    context "when the target project and the source project is the same" do
+      let(:target_project) { source_project }
+      it "does nothing" do
+        expect { subject }.to_not change { person.reload.assignments.first.end_date }
+      end
+    end
+
     context "when last weeks assignment is to the target project" do
       let!(:target_assignment) do
         AssignmentCreator.new(
