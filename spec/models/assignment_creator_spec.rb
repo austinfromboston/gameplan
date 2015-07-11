@@ -28,6 +28,74 @@ describe AssignmentCreator do
     it "ends the prior assignment" do
       expect {subject}.to change { source_assignment.reload.end_date }.to(Date.new(2014,10,13))
     end
+
+    context "when restoring an interruption in source project continuity" do
+      let(:creator) do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: source_project.to_param,
+          timeslot: start_time)
+      end
+      before do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: target_project.to_param,
+          timeslot: start_time).save
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: source_project.to_param,
+          timeslot: "2014/11/15").save
+      end
+      it "deletes the interrupting assignment and the final assignment" do
+        expect { subject }.to change { person.reload.assignments.count }.by(-2)
+      end
+      it "assigns the end_date of the final assignment to initial assignment" do
+        expect { subject }.to change { source_assignment.reload.end_date }.to(nil)
+      end
+    end
+
+    context "when a future assignment to the same project exists" do
+      before do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: target_project.to_param,
+          timeslot: "2014/11/15").save
+      end
+      it "should change the start date and return the existing assignment" do
+        expect { subject }.to_not change { person.assignments.count }
+        expect(subject.start_date).to eq(Date.new(2014,10,13).beginning_of_week)
+        expect(subject.end_date).to eq(nil)
+      end
+    end
+
+    context "when a future assignment to another project exists" do
+      let(:another_target_project) { create(:capacity_plan, :with_project).project }
+      before do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: another_target_project.to_param,
+          timeslot: "2014/11/15").save
+      end
+      it "should end the new assignment before the future assignment starts" do
+        expect(subject.end_date).to eq(Date.new(2014,11,9))
+      end
+    end
+  end
+
+  describe "#new_assignment_end" do
+    subject { creator.new_assignment_end }
+    it { should be_nil }
+    context "when a future assignment exists" do
+      before do
+        AssignmentCreator.new(
+          person_id: person.to_param,
+          project_id: target_project.to_param,
+          timeslot: "2014/11/15").save
+      end
+      it "should be prior to the future assignment starts" do
+        expect(subject).to eq(Date.new(2014,11,9))
+      end
+    end
   end
 
   describe "#prior_assignment" do
@@ -53,8 +121,8 @@ describe AssignmentCreator do
 
   describe "#new_assignment_start" do
     subject { creator.new_assignment_start }
-    it "should be a timestamp" do
-      expect(subject).to eq(Time.mktime(2014, 10, 13))
+    it "should be a date" do
+      expect(subject).to eq(Date.new(2014, 10, 13))
     end
   end
 end

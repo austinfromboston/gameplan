@@ -69,9 +69,8 @@ var ProjectWeek = React.createClass({
       {person_id: droppedPerson.person_id, timeslot: this.props.week.toString(), project_id: this.props.project_id }
 
     ).done(function(data) {
-        console.log($(sourceProject).closest('.project-row'), $(targetProject).closest('.project-row'))
-        $(sourceProject).closest('.project-row').trigger('update');
-        $(targetProject).closest('.project-row').trigger('update');
+        $(sourceProject).trigger('update');
+        $(targetProject).trigger('update');
       }.bind(this)
     ).fail(function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
