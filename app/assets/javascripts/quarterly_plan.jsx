@@ -19,7 +19,10 @@ var QuarterlyPlan = React.createClass({
   render: function() {
     var self = this;
     var projects = this.props.projects.map(function(project) {
-      return (<Project name={project.name} weeks={self.state.chartWeeks} project_id={project.id} key={project.id}/>);
+      var firstWeek = self.state.chartWeeks[0].format("YYYY-MM-DD");
+      var lastWeek = self.state.chartWeeks.slice(-1)[0].format("YYYY-MM-DD");
+      var url = "/projects/" + project.id + "/project_weeks?start_date=" + firstWeek + "&end_date=" + lastWeek;
+      return (<Project name={project.name} url={url} weeks={self.state.chartWeeks} project_id={project.id} key={project.id}/>);
     });
     return (
     <div className="quarterlyPlan gp-table alternating">

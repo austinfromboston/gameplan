@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
   resources :assignments, only: :create
   resources :projects, only: [] do
-    resources :project_weeks, only: :show
+    resources :project_weeks, only: [:show, :index]
   end
   root to: "plans#show"
   # The priority is based upon order of creation: first created -> highest priority.

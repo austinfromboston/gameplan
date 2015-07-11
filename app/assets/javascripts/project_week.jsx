@@ -1,40 +1,40 @@
 var ProjectWeek = React.createClass({
-  getInitialState: function() {
-    return { data: []}
-  },
+  //getInitialState: function() {
+  //  return { data: this.props.assignments || [] }
+  //},
 
   componentDidMount: function() {
     this.setupDropzone(React.findDOMNode(this))
 
-    this.fetchAssignments();
-    this.removeDropped();
+    //this.fetchAssignments();
+    //this.removeDropped();
   },
 
-  removeDropped: function() {
-    var self = this;
-    $(React.findDOMNode(this)).on('dropped', function(ev, droppedData) {
-      self.setState(function(previousState, currentProps) {
-        var dup = previousState.data.filter(function(el, idx, array) {
-          return el.id != droppedData.id;
-        });
-        return {data: dup};
-      });
-    });
-  },
+  //removeDropped: function() {
+  //  var self = this;
+  //  $(React.findDOMNode(this)).on('dropped', function(ev, droppedData) {
+  //    self.setState(function(previousState, currentProps) {
+  //      var dup = previousState.data.filter(function(el, idx, array) {
+  //        return el.id != droppedData.id;
+  //      });
+  //      return {data: dup};
+  //    });
+  //  });
+  //},
 
-  fetchAssignments: function(){
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
+  //fetchAssignments: function(){
+  //  $.ajax({
+  //    url: this.props.url,
+  //    dataType: 'json',
+  //    cache: false,
+  //    success: function(data) {
+  //      this.setState({data: data});
+  //    }.bind(this),
+  //    error: function(xhr, status, err) {
+  //      console.error(this.props.url, status, err.toString());
+  //    }.bind(this)
+  //  });
+  //},
 
   setupDropzone: function(el) {
     var self = this;
@@ -55,22 +55,23 @@ var ProjectWeek = React.createClass({
 
   handleDrop: function(ev) {
     var droppedPerson = $(ev.relatedTarget).data('person');
-    this.setState(function(previousState, currentProps) {
-      var dup = previousState.data.slice(0);
-      dup.push(droppedPerson);
-      return {data: dup};
-    });
-    $(ev.relatedTarget).trigger('dropped', droppedPerson);
-    console.log(this.props.week);
-    this.notifyServer(droppedPerson);
+    //this.setState(function(previousState, currentProps) {
+    //  var dup = previousState.data.slice(0);
+    //  dup.push(droppedPerson);
+    //  return {data: dup};
+    //});
+    //$(ev.relatedTarget).trigger('dropped', droppedPerson);
+    this.notifyServer(droppedPerson, ev.relatedTarget, ev.target);
   },
 
-  notifyServer: function(droppedPerson) {
+  notifyServer: function(droppedPerson, sourceProject, targetProject) {
     $.post('/assignments',
-      {person_id: droppedPerson.id, timeslot: this.props.week.toString(), project_id: this.props.project_id }
+      {person_id: droppedPerson.person_id, timeslot: this.props.week.toString(), project_id: this.props.project_id }
 
     ).done(function(data) {
-        console.log('success');
+        console.log($(sourceProject).closest('.project-row'), $(targetProject).closest('.project-row'))
+        $(sourceProject).closest('.project-row').trigger('update');
+        $(targetProject).closest('.project-row').trigger('update');
       }.bind(this)
     ).fail(function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -80,13 +81,13 @@ var ProjectWeek = React.createClass({
 
   render: function() {
     var self=this;
-    var assignments = this.state.data.map(function(assignment) {
+    var assignments = this.props.assignments.map(function(assignment) {
       return (
         <ProjectWeekAssignment key={assignment.id} week={self.props.week} person={JSON.stringify(assignment)} name={assignment.person_name} abbrev={assignment.person_abbreviation} person_id={assignment.person_id}/>
       );
     });
     var placeholderClass = '';
-    if(this.state.data.length == 0) {
+    if(this.props.assignments.length == 0) {
       placeholderClass = " empty-droplist";
     }
 
