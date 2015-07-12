@@ -25,8 +25,20 @@ var Project = React.createClass({
   },
 
   render: function() {
+    return (
+      <div className="project-row">
+        <WeekHeaders currentWeeks={this.props.weeks} />
+        <ul className="project-row-list">
+          <li className="project-row-header"><div className="project-name">{this.props.name}</div></li>
+          {this.renderWeekNodes()}
+        </ul>
+      </div>
+    )
+  },
+
+  renderWeekNodes: function() {
     var self = this;
-    var weekNodes = this.props.weeks.map(function(week) {
+    return this.props.weeks.map(function(week) {
       var weekUrl = "/projects/" + self.props.project_id + "/project_weeks/" + week.format("YYYY-MM-DD");
       return (
         <ProjectWeek
@@ -38,14 +50,5 @@ var Project = React.createClass({
           key={weekUrl} />
       )
     });
-    return (
-      <div className="project-row">
-        <WeekHeaders currentWeeks={this.props.weeks} />
-        <ul className="project-row-list">
-          <li className="project-row-header"><div className="project-name">{this.props.name}</div></li>
-          {weekNodes}
-        </ul>
-      </div>
-    )
   }
 });

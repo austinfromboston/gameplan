@@ -7,9 +7,10 @@ var ProjectWeek = React.createClass({
       this.updater = new ProjectWeekUpdater(this);
     }
   },
-  render: function() {
+
+  renderAssignments: function() {
     var self=this;
-    var assignments = this.props.assignments.map(function(assignment) {
+    return this.props.assignments.map(function(assignment) {
       return (
         <ProjectWeekAssignment
           key={assignment.id}
@@ -21,23 +22,30 @@ var ProjectWeek = React.createClass({
           person_id={assignment.person_id} />
       );
     });
-    var placeholderClass = '';
+  },
+
+  render: function() {
+    var classList = ["project-row-item", "accept-" + this.props.week];
+
     if(this.props.assignments.length == 0) {
-      placeholderClass = " empty-droplist";
+      classList.push("empty-droplist");
     }
-    var monthlyBoundaryClass= '';
-
     if(this.props.week.month() < this.props.week.clone().add(1, 'week').month()) {
-      monthlyBoundaryClass = " monthly-boundary"
+      classList.push("monthly-boundary");
     }
 
-    var activeDropClass= this.state.activeDrop ? ' current-drop' : '';
-    var possibleDropClass= this.state.possibleDrop ? ' schedule-drop' : '';
+    if(this.state.activeDrop) {
+      classList.push('current-drop');
+    }
+
+    if(this.state.possibleDrop) {
+      classList.push('schedule-drop');
+    }
 
     return (
-      <li className={monthlyBoundaryClass + "accept-" + this.props.week + placeholderClass + activeDropClass + possibleDropClass}>
+      <li className={classList.join(" ")}>
         <ul className="assignment-list">
-          {assignments}
+          {this.renderAssignments()}
         </ul>
       </li>
     )

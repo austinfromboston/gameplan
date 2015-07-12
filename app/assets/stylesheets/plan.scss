@@ -1,10 +1,10 @@
 .schedule-drop {
   border: 0 1px 0 1px solid red;
-  background: rgba(255, 100, 100, 0.2);
+  background: rgba(100, 220, 50, 0.2);
 }
 
 .schedule-drop.current-drop {
-  background: rgba(255, 100, 100, 0.8);
+  background: rgba(100, 220, 50, 0.8);
 }
 
 .gp-table {
@@ -29,6 +29,7 @@
   > li {
     display: table-cell;
     font-weight: bold;
+    padding: 0 15px;
   }
 }
 
@@ -55,13 +56,18 @@
   }
 }
 
-.assignment-list {
-  margin-right: 20px;
-  padding: 0 20px 0 0;
+.project-row-item {
+  padding: 0 15px;
 
   &.monthly-boundary {
-    border-right: 1px solid grey;
+    border-right: 1px dashed grey;
   }
+
+}
+
+.assignment-list {
+  padding: 0;
+
 
   > li {
     display: table-row;
