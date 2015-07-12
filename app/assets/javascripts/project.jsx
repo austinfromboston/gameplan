@@ -29,14 +29,13 @@ var Project = React.createClass({
     var weekNodes = this.props.weeks.map(function(week) {
       var weekUrl = "/projects/" + self.props.project_id + "/project_weeks/" + week.format("YYYY-MM-DD");
       return (
-        React.createElement((self.props.updateable ? UpdateableProjectWeek : ProjectWeek), {
-          url: weekUrl,
-          week: week,
-          assignments: (self.state.data[week.format('YYYY-MM-DD')] || []),
-          project_id: self.props.project_id,
-          key: weekUrl
-        })
-
+        <ProjectWeek
+          url={weekUrl}
+          week={week}
+          updateable={self.props.updateable}
+          assignments={self.state.data[week.format('YYYY-MM-DD')] || []}
+          project_id={self.props.project_id}
+          key={weekUrl} />
       )
     });
     return (
