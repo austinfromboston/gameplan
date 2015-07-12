@@ -40,13 +40,13 @@ describe("QuarterlyPlan", function() {
     });
 
     it("passes the weeks", function() {
-      this.qpOutput.props.children[1].props.currentWeeks[0].format("YY-MM-DD").should.equal('13-09-30');
-      this.qpOutput.props.children[1].props.currentWeeks.length.should.equal(12);
+      this.qpOutput.props.children[1][1].props.weeks[0].format("YY-MM-DD").should.equal('13-09-30');
+      this.qpOutput.props.children[1][1].props.weeks.length.should.equal(12);
     });
 
     it("passes the project data", function() {
-      this.qpOutput.props.children[2][0].props.name.should.equal('Aut')
-      this.qpOutput.props.children[2][0].props.project_id.should.equal(20)
+      this.qpOutput.props.children[1][0].props.name.should.equal('Aut')
+      this.qpOutput.props.children[1][0].props.project_id.should.equal(20)
     });
 
   });

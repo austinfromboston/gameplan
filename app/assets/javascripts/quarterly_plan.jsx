@@ -3,7 +3,9 @@ var QuarterlyPlan = React.createClass({
     var sequenceSize = 12;
     var weeks = this.calculateChartWeeks(this.props.start, sequenceSize)
     return {
-      chartWeeks: weeks
+      chartWeeks: weeks,
+      firstWeek: weeks[0],
+      lastWeek: weeks.slice(-1)[0]
     }
   },
 
@@ -17,23 +19,27 @@ var QuarterlyPlan = React.createClass({
   },
 
   render: function() {
-    var self = this;
-    var projects = this.props.projects.map(function(project) {
-      var firstWeek = self.state.chartWeeks[0].format("YYYY-MM-DD");
-      var lastWeek = self.state.chartWeeks.slice(-1)[0].format("YYYY-MM-DD");
-      var url = "/projects/" + project.id + "/project_weeks?start_date=" + firstWeek + "&end_date=" + lastWeek;
-      return (<Project name={project.name}
-                      updateable={self.props.updateable}
-                      url={url}
-                      weeks={self.state.chartWeeks}
-                      project_id={project.id}
-                      key={project.id}/>);
-    });
     return (
     <div className="quarterlyPlan gp-table alternating">
     <h1 className="plan-header">Team Allocations</h1>
-    {projects}
+    {this.renderProjects()}
     </div>
     );
+  },
+
+  renderProjects: function() {
+    var self = this;
+    return this.props.projects.map(function(project) {
+      return (<Project name={project.name}
+              updateable={self.props.updateable}
+              url={self.projectUrl(project)}
+              weeks={self.state.chartWeeks}
+              project_id={project.id}
+              key={project.id}/>);
+    });
+  },
+
+  projectUrl: function(project) {
+    return "/projects/" + project.id + "/project_weeks?start_date=" + this.state.firstWeek.format("YYYY-MM-DD") + "&end_date=" + this.state.lastWeek.format("YYYY-MM-DD");
   }
 });
