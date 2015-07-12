@@ -5,7 +5,7 @@ var Project = React.createClass({
 
   componentDidMount: function() {
     this.fetchAssignments();
-    $(React.findDOMNode(this)).on('update', function() {
+    $(React.findDOMNode(this)).on('refresh', function() {
       this.fetchAssignments();
     }.bind(this));
   },

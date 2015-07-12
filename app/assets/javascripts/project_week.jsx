@@ -1,4 +1,7 @@
 var ProjectWeek = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
   componentDidMount: function() {
     if(this.props.updateable) {
       this.updater = new ProjectWeekUpdater(this);
@@ -9,13 +12,13 @@ var ProjectWeek = React.createClass({
     var assignments = this.props.assignments.map(function(assignment) {
       return (
         <ProjectWeekAssignment
-        key={assignment.id}
-        updateable={self.props.updateable}
-        week={self.props.week}
-        person={JSON.stringify(assignment)}
-        name={assignment.person_name}
-        abbrev={assignment.person_abbreviation}
-        person_id={assignment.person_id} />
+          key={assignment.id}
+          updateable={self.props.updateable}
+          week={self.props.week}
+          person={JSON.stringify(assignment)}
+          name={assignment.person_name}
+          abbrev={assignment.person_abbreviation}
+          person_id={assignment.person_id} />
       );
     });
     var placeholderClass = '';
@@ -28,9 +31,12 @@ var ProjectWeek = React.createClass({
       monthlyBoundaryClass = " monthly-boundary"
     }
 
+    var activeDropClass= this.state.activeDrop ? ' current-drop' : '';
+    var possibleDropClass= this.state.possibleDrop ? ' schedule-drop' : '';
+
     return (
-      <li>
-        <ul onDrop={this.handleDrop} className={"assignment-list accept-" + this.props.week + placeholderClass + monthlyBoundaryClass}>
+      <li className={monthlyBoundaryClass + "accept-" + this.props.week + placeholderClass + activeDropClass + possibleDropClass}>
+        <ul className="assignment-list">
           {assignments}
         </ul>
       </li>

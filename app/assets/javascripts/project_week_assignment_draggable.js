@@ -8,20 +8,11 @@ ProjectWeekAssignmentDraggable.prototype = {
     interact(draggableNode)
       .draggable({
         onmove: this.dragMoveListener.bind(this),
-        onend: this.dragEnd.bind(this),
-        onstart: function(event) {
-          $('.accept-' + $(event.target).data('timeslot')).addClass('schedule-drop');
-        }
+        onend: this.resetPosition.bind(this),
       }
     );
   },
 
-  dragEnd: function() {
-    $('.schedule-drop').removeClass('schedule-drop');
-    $('.current-drop').removeClass('current-drop');
-
-    this.resetPosition();
-  },
 
   resetPosition: function() {
     this.dragPlaceholder.remove();
@@ -29,13 +20,15 @@ ProjectWeekAssignmentDraggable.prototype = {
   },
 
   dragMoveListener: function (event) {
-    if(this.dragPlaceholder == undefined) {
-      var dragDiv = document.createElement('div');
-      dragDiv.style.position = "absolute";
-      dragDiv.textContent = $(event.target).text();
-      this.dragPlaceholder = document.body.appendChild(dragDiv);
-    }
+    this.dragPlaceholder = this.dragPlaceholder || this.createDragPlaceholder();
     this.dragPlaceholder.style.top = (event.clientY + $(window).scrollTop()) + "px";
     this.dragPlaceholder.style.left = event.clientX0 + "px";
+  },
+
+  createDragPlaceholder: function() {
+    var dragDiv = document.createElement('div');
+    dragDiv.style.position = "absolute";
+    dragDiv.textContent = $(event.target).text();
+    return document.body.appendChild(dragDiv);
   }
 };

@@ -7,7 +7,7 @@ var ProjectWeekAssignment = React.createClass({
   render: function() {
     return (
       <li
-        className="assigned-slot"
+        className={"assigned-slot assigned-"+this.props.week}
         title={this.props.name}
         data-timeslot={this.props.week}
         data-person={this.props.person}>
