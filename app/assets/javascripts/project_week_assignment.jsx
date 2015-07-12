@@ -1,8 +1,18 @@
 var ProjectWeekAssignment = React.createClass({
+  render: function() {
+    return (
+      <li
+        className="assigned-slot"
+        title={this.props.name}
+        data-timeslot={this.props.week}
+        data-person={this.props.person}>
+        {this.props.abbrev}</li>
+    );
+  }
+});
+
+var UpdateableProjectWeekAssignment = React.createClass({
   componentDidMount: function() {
-    if(this.props.updateable == false) {
-      return;
-    }
     var self = this;
     interact(React.findDOMNode(this))
       .draggable({
@@ -45,12 +55,7 @@ var ProjectWeekAssignment = React.createClass({
 
   render: function() {
     return (
-      <li
-        className="assigned-slot"
-        title={this.props.name}
-        data-timeslot={this.props.week}
-        data-person={this.props.person}>
-        {this.props.abbrev}</li>
-    );
+      <ProjectWeekAssignment key={this.props.assignmentId} {...this.props}/>
+    )
   }
 });
