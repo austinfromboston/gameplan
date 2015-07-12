@@ -106,7 +106,7 @@ var ProjectWeekAssignment = React.createClass({
       dragDiv.textContent = $(event.target).text();
       self.dragPlaceholder = document.body.appendChild(dragDiv);
     }
-    self.dragPlaceholder.style.top = event.clientY + "px";
+    self.dragPlaceholder.style.top = (event.clientY + $(window).scrollTop()) + "px";
     self.dragPlaceholder.style.left = event.clientX0 + "px";
   },
 
