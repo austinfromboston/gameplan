@@ -31,6 +31,7 @@ var Project = React.createClass({
       return (
         <ProjectWeek
           url={weekUrl}
+          updateable={self.props.updateable}
           week={week}
           assignments={self.state.data[week.format('YYYY-MM-DD')] || []}
           project_id={self.props.project_id}

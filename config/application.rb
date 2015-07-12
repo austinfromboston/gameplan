@@ -25,7 +25,6 @@ module Gameplan
 
     config.react.variant      = :production
     config.react.addons       = true
-    config.browserify_rails.commandline_options = "--transform reactify --extension=\".jsx\""
     config.react.jsx_transform_options = {
       harmony: true,
       strip_types: true, # for removing Flow type annotations

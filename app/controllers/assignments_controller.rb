@@ -1,4 +1,6 @@
 class AssignmentsController < ApplicationController
+  before_filter :require_admin_login
+
   def create
     AssignmentCreator.new(assignment_params).save
     render json: {}

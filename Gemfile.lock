@@ -27,13 +27,6 @@ GIT
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
 
-GIT
-  remote: git@github.com:browserify-rails/browserify-rails.git
-  revision: 81bed3f8b0965511e72450ad52b6bad85a44630a
-  specs:
-    browserify-rails (1.0.1)
-      railties (>= 4.0.0, < 5.0)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -293,7 +286,6 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activeadmin!
-  browserify-rails!
   byebug
   coffee-rails
   factory_girl_rails
