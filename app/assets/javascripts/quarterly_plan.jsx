@@ -26,8 +26,7 @@ var QuarterlyPlan = React.createClass({
     });
     return (
     <div className="quarterlyPlan gp-table alternating">
-    <h1 className="plan-header">QuarterlyPlan</h1>
-    <WeekHeaders currentWeeks={this.state.chartWeeks} />
+    <h1 className="plan-header">Team Allocations</h1>
     {projects}
     </div>
     );

@@ -11,25 +11,35 @@
   display: table;
   border-collapse: collapse;
 
-  > ul {
+  .project-row {
     border-bottom: 1px solid grey;
   }
-  ul:nth-child(even) {
+  .project-row:nth-child(odd) {
     background-color: whitesmoke;
   }
 }
 .week-headers {
-  display: table-header-group;
+  display: none;
+  border-bottom: 1px solid grey;
+
+  &.active {
+    display: table-row;
+  }
 
   > li {
     display: table-cell;
+    font-weight: bold;
   }
 }
 
 .plan-header {
   display: table-caption;
 }
+
 .project-row {
+  display: table-row-group;
+}
+.project-row-list {
   display: table-row;
 
   .project-name {
@@ -46,9 +56,12 @@
 }
 
 .assignment-list {
-  margin-right: 40px;
-  padding: 0;
+  margin-right: 20px;
+  padding: 0 20px 0 0;
 
+  &.monthly-boundary {
+    border-right: 1px solid grey;
+  }
 
   > li {
     display: table-row;

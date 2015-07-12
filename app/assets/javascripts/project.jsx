@@ -38,10 +38,13 @@ var Project = React.createClass({
       )
     });
     return (
-      <ul className="project-row">
-        <li className="project-row-header"><div className="project-name">{this.props.name}</div></li>
-        {weekNodes}
-      </ul>
+      <div className="project-row">
+        <WeekHeaders currentWeeks={this.props.weeks} />
+        <ul className="project-row-list">
+          <li className="project-row-header"><div className="project-name">{this.props.name}</div></li>
+          {weekNodes}
+        </ul>
+      </div>
     )
   }
 });
