@@ -33,6 +33,7 @@ gem 'react-rails'
 gem 'browserify-rails', git: 'git@github.com:browserify-rails/browserify-rails.git'
 gem 'active_model_serializers'
 gem 'tilt', '> 2.0'
+gem 'omniauth-google-oauth2'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

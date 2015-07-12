@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     resources :project_weeks, only: [:show, :index]
   end
   root to: "plans#show"
+  match "/auth/:provider/callback" => 'sessions#create', as: "login_callback", via: [:get, :post]
+  # get "/auth/:provider/callback" => 'sessions#create'
+  resource :session, only: [:new, :create, :destroy]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

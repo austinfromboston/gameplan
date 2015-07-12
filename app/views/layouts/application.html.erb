@@ -10,7 +10,18 @@
 
 <div class="ink-grid">
   <navigation>
-    <%= link_to 'Admin', admin_root_path %>
+    <div class="push-right">
+      <p>
+        <%= image_tag(current_user.image, class: 'profile-pic') if current_user.image %>
+        <%= current_user.display_name %>
+        &nbsp;&nbsp;
+        <% if current_user.admin? %>
+          <%= link_to 'Admin', admin_root_path %>
+        <% end %>
+        &nbsp;&nbsp;
+        <%= link_to 'Logout', session_path, method: :delete %>
+      </p>
+    </div>
   </navigation>
   <%= yield %>
 </div>
