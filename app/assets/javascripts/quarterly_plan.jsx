@@ -21,7 +21,7 @@ var QuarterlyPlan = React.createClass({
   render: function() {
     return (
     <div className="quarterlyPlan gp-table alternating">
-    <h1 className="plan-header">Team Allocations</h1>
+    <h1 className="plan-header">Project Allocations</h1>
     {this.renderProjects()}
     </div>
     );

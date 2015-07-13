@@ -53,10 +53,11 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'faker'
   gem 'factory_girl_rails'
-
+  gem 'sinon-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'konacha'
+  # gem 'konacha-chai-matchers'
   gem "selenium-webdriver"
 end
 

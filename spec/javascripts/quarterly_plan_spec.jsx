@@ -15,7 +15,13 @@ describe("QuarterlyPlan", function() {
     });
     it("includes 12 weeks", function() {
       this.qp.state.chartWeeks.length.should.equal(12)
-    })
+    });
+    it("has a firstWeek", function() {
+      expect(this.qp.state.firstWeek.isSame(moment().startOf('isoWeek'))).to.equal(true);
+    });
+    it("has a lastWeek", function() {
+      expect(this.qp.state.lastWeek.isSame(moment().startOf('isoWeek').add({weeks: 11}))).to.equal(true);
+    });
   });
 
   describe("#calculateChartWeeks", function() {
@@ -28,6 +34,23 @@ describe("QuarterlyPlan", function() {
     });
 
 
+  });
+
+  describe("#renderProjects", function() {
+    it("renders each project", function() {
+      expect(this.qp.renderProjects()).to.have.lengthOf(2)
+      expect(this.qp.renderProjects()[0].type.displayName).to.equal('Project')
+    });
+  });
+
+  describe("#projectUrl", function() {
+    beforeEach(function() {
+      this.template = <QuarterlyPlan projects={this.projectData} start="2013-10-01"/>;
+      this.qp = React.addons.TestUtils.renderIntoDocument(this.template);
+    });
+    it("returns a url with a time scope", function() {
+      expect(this.qp.projectUrl({id: 5})).to.equal("/projects/5/project_weeks?start_date=2013-09-30&end_date=2013-12-16")
+    });
   });
 
   describe("#render", function() {
