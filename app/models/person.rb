@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
 
   def sample_abbreviation
     return if self.abbreviation.present?
-    self.abbreviation = (first_name[0] + last_name[0]).upcase
+    self.abbreviation = first_name
   end
 
   def name
