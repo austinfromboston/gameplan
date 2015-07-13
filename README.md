@@ -55,7 +55,7 @@ export GOOGLE_OAUTH2_CLIENT_ID=[your client id here]
 export GOOGLE_OAUTH2_CLIENT_SECRET=[your client secret here]
 ```
 
-Here's a (handy walkthrough)[https://www.twilio.com/blog/2014/09/gmail-api-oauth-rails.html] on how to get these values from the Google API console
+Here's a [handy walkthrough](https://www.twilio.com/blog/2014/09/gmail-api-oauth-rails.html) on how to get these values from the Google API console
 
 ## Google Apps Domain-Specific Access
 
