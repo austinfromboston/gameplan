@@ -1,5 +1,9 @@
-<% if ENV['GOOGLE_OAUTH2_CLIENT_ID'] %>
-  <%= link_to "Authenticate with Google", '/auth/google_oauth2' %>
-<% else %>
-  <%= link_to "Authenticate with Developer Strategy", '/auth/developer' %>
-<% end %>
+<div class="align-center top-space">
+  <h1>Welcome to Gameplan</h1>
+  <% if ENV['GOOGLE_OAUTH2_CLIENT_ID'] %>
+    <%= link_to "Sign In with Google", '/auth/google_oauth2', class: 'ink-button green' %>
+  <% else %>
+    <%= link_to "Sign In with Developer Mode", '/auth/developer', class: 'ink-button green' %>
+  <% end %>
+
+</div>
