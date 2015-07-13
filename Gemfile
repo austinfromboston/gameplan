@@ -47,11 +47,12 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
 end
 
+gem 'faker'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails'
-  gem 'faker'
   gem 'factory_girl_rails'
   gem 'sinon-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
