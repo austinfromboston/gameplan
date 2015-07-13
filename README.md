@@ -15,9 +15,11 @@ To get started with the project, clone this repository, `cd` into your local che
 ```
 bundle install
 rake db:create:all
-rake db:migrate:all
+rake db:migrate
+rake db:seed
 ```
 
+You can then start the server with `rails s`
 
 ### Demo Data
 If you'd like to generate some demo data to see how gameplan works, use `rake populate:plan`.
@@ -25,25 +27,24 @@ If you'd like to generate some demo data to see how gameplan works, use `rake po
 
 ### Admin Privileges
 
-To view the admin interface where you can enter your projects and personnel, you'll need to set the admin column on your user to 'true';
+To view the admin interface where you can enter your projects and personnel, and make updates to the plan, you can set the following environment variable:
+
+```
+export ADMIN_BY_DEFAULT=true
+```
+
+In production, you'll need to set the admin column on your user to 'true';
 You can do this via the rails console, like so:
 
 ```
 ± |master ✗| → rails c
 Loading development environment (Rails 4.2.0)
 irb(main):001:0> u = User.find 1
-  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
-=> #<User id: 1, first_name: nil, name: "Austin", email: "austin@foo.com", image: nil, admin: nil, created_at: "2015-07-12 16:40:20", updated_at: "2015-07-12 16:40:20">
 irb(main):002:0> u.update_attributes admin: true
-   (0.2ms)  begin transaction
-  SQL (0.5ms)  UPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?  [["admin", "t"], ["updated_at", "2015-07-13 04:37:03.488296"], ["id", 1]]
-   (3.4ms)  commit transaction
-=> true
 irb(main):003:0> exit
-
-|ruby-2.2.2@gameplan| balaam in ~/projects/gameplan
-± |master ✗| →
 ```
+
+
 
 ## Auth via Google
 

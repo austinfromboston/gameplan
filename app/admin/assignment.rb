@@ -1,5 +1,6 @@
 ActiveAdmin.register Assignment do
   permit_params :capacity_plan_id, :start_date, :end_date, :person_id
+  menu false
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

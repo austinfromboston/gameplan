@@ -58,9 +58,9 @@ ActiveRecord::Schema.define(version: 20150712160738) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
+    t.string   "designation"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.string   "designation"
   end
 
   create_table "users", force: :cascade do |t|
