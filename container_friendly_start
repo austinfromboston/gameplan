@@ -1,2 +1,3 @@
-RAILS_ENV=production test "$INSTANCE_INDEX" = 0 && bundle exec rake db:migrate && rake db:seed && bundle exec rails server -p $PORT -b0.0.0.0
-RAILS_ENV=production test "$INSTANCE_INDEX" != 0 && bundle exec rails server -p $PORT -b0.0.0.0
+set -e -x
+test "$INSTANCE_INDEX" = 0 && bundle exec rake db:migrate && rake db:seed
+bundle exec rails server -p $PORT -b0.0.0.0
