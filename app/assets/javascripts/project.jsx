@@ -4,22 +4,26 @@ var Project = React.createClass({
   },
 
   componentDidMount: function() {
-    this.fetchAssignments();
+    this.fetchAssignments(this.props.url);
     $(React.findDOMNode(this)).on('refresh', function() {
-      this.fetchAssignments();
+      this.fetchAssignments(this.props.url);
     }.bind(this));
   },
 
-  fetchAssignments: function(){
+  componentWillReceiveProps: function(nextProps) {
+    this.fetchAssignments(nextProps.url);
+  },
+
+  fetchAssignments: function(sourceUrl){
     $.ajax({
-      url: this.props.url,
+      url: sourceUrl,
       dataType: 'json',
       cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error(sourceUrl, status, err.toString());
       }.bind(this)
     });
   },
