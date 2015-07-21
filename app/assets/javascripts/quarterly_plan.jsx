@@ -1,7 +1,11 @@
 var QuarterlyPlan = React.createClass({
   getInitialState: function() {
+    return this.chartTimelineState(this.props.start)
+  },
+
+  chartTimelineState: function(requestedStart) {
     var sequenceSize = 12;
-    var weeks = this.calculateChartWeeks(this.props.start, sequenceSize)
+    var weeks = this.calculateChartWeeks(requestedStart, sequenceSize)
     return {
       chartWeeks: weeks,
       firstWeek: weeks[0],
@@ -21,10 +25,28 @@ var QuarterlyPlan = React.createClass({
   render: function() {
     return (
     <div className="quarterlyPlan gp-table alternating">
+      <navigation>
+        <a href="#" onClick={this.goPrevious}>&laquo;Prev</a>&nbsp;&nbsp;
+        <a href="#" onClick={this.goNext}>Next&raquo;</a>
+      </navigation>
     <h1 className="plan-header">Project Allocations</h1>
     {this.renderProjects()}
     </div>
     );
+  },
+
+  goNext:function(ev) {
+    ev.preventDefault();
+    this.setState(function(previousState, props) {
+      return this.chartTimelineState(moment(previousState.firstWeek.clone().add(4, 'weeks')))
+    })
+  },
+
+  goPrevious:function(ev) {
+    ev.preventDefault();
+    this.setState(function(previousState, props) {
+      return this.chartTimelineState(moment(previousState.firstWeek.clone().subtract(4, 'weeks')))
+    })
   },
 
   renderProjects: function() {
