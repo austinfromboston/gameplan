@@ -1,3 +1,3 @@
-= react_component('QuarterlyPlan', projects: @projects.map {|p| ProjectSerializer.new(p)}, updateable: current_user.admin?)
+= react_component('QuarterlyPlan', plan_id: @plan.to_param, projects: @projects.map {|p| ProjectSerializer.new(p)}, updateable: current_user.admin?)
 
 

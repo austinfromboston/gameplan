@@ -1,15 +1,11 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
-  resource :plan do
-    member do
-      get :demo
-    end
-  end
+  resources :plans, only: [:show, :create]
   resources :assignments, only: :create
   resources :projects, only: [] do
     resources :project_weeks, only: [:show, :index]
   end
-  root to: "plans#show"
+  root to: "plans#show", id: "master"
   match "/auth/:provider/callback" => 'sessions#create', as: "login_callback", via: [:get, :post]
   # get "/auth/:provider/callback" => 'sessions#create'
   resource :session, only: [:new, :create, :destroy]

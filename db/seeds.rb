@@ -17,3 +17,7 @@ if Project.where(designation: :vacation).empty?
     CapacityPlan.create quantity: 2, project: p, start_date: 1.month.ago
   end
 end
+
+if Plan.where(designation: :master).empty?
+  Plan.create(name: 'Master', designation: :master)
+end
