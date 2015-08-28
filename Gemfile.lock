@@ -19,6 +19,7 @@ GIT
 GIT
   remote: git://github.com/rails/sass-rails.git
   revision: 8e68c5f24ed6487277e9df531ec57b375ad1bea2
+  ref: 8e68c5f24
   specs:
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -324,3 +325,6 @@ DEPENDENCIES
   thin
   tilt (> 2.0)
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.10.5
