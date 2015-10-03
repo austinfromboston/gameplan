@@ -1,0 +1,9 @@
+FROM gameplan-bundle
+
+RUN mkdir /tmp/bundled
+RUN cp /var/myapp/* /tmp/bundled/
+ADD . /var/myapp
+WORKDIR /var/myapp
+RUN cp /tmp/bundled/* /var/myapp/
+RUN bundle
+CMD ["bundle", "exec", "rake"]
