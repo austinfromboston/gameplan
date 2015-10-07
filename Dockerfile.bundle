@@ -1,8 +1,11 @@
 FROM ubuntu:14.04
 
+#Install apt-packages
 RUN echo start \
   && apt-get update \
-  && apt-get -y install build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev wget
+  && apt-get -y install build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev wget libssl-dev pkg-config python2.7 libpq-dev git libsqlite3-dev curl wget
+
+#Install Ruby
 RUN wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz \
   && tar -xvzf ruby-2.2.2.tar.gz \
   && cd ruby-2.2.2 \
@@ -10,7 +13,7 @@ RUN wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz \
   && make \
   && make install
 
-
+#Install Rubygems
 RUN wget http://production.cf.rubygems.org/rubygems/rubygems-2.4.8.tgz \
   && tar xfz rubygems-2.4.8.tgz \
   && cd rubygems-2.4.8 \
@@ -18,9 +21,12 @@ RUN wget http://production.cf.rubygems.org/rubygems/rubygems-2.4.8.tgz \
   && cd .. \
   && gem install bundler
 
-RUN apt-get -y install libpq-dev nodejs git libsqlite3-dev
+#Install Node
+RUN apt-get -y remove nodejs
+RUN curl --silent --location https://deb.nodesource.com/setup_0.12 | sudo bash -
+RUN apt-get -y install nodejs
 
 RUN mkdir /var/myapp
 ADD Gemfile /var/myapp/Gemfile
 
-RUN cd /var/myapp && bundle install
+RUN cd /var/myapp && bundle

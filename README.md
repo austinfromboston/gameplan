@@ -75,3 +75,29 @@ rake konacha:run
 ```
 
 
+## Docker workflows
+
+Building the base bundle. Do it when:
+
+- Getting started
+- You deleted and reinstalled your local docker server
+- Updating ruby or node
+- Updating linux dependencies (apt packages)
+- Wanting to cache gem downloading
+
+`docker build -t gameplan-bundle -f Dockerfile.bundle .` 
+
+Running tests in a container
+`./docker_tests.sh`
+
+Trying out a production-like container
+```
+docker build -t gameplan -f Dockerfile.production
+docker run -p 7777:8888 -e PORT=8888 -e DATABASE_URL="postgres://..." gameplan
+```
+
+Pushing gameplan image to a remote registry
+```
+docker build -t REGISTRY_ADDRESS:5000/gameplan -f Dockerfile.production
+docker push REGISTRY_ADDRESS:5000/gameplan
+```
